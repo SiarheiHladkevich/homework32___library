@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ block.super }} - Books list
+{% endblock title %}
+
+
+{% block content %}
+<h3 class="mb-5">Список книг:</h3>
+{% for book in books %}
+<div class="card mb-3" style="max-width: 760px; background-color: #F8F8FF; border-color: #72CFDC; border-radius: 0.5rem;">
+    <div class="row no-gutters">
+        <div class="col-md-6 text-center">
+            <img src="{% static book.cover %}" alt="pic" width="125px" height="190px">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{book.author.name}}<br>"{{book.title}}"
+                </h5>
+                <p class="card-text">
+                    {% for genre in book.genres.all %}
+                    {{genre.name}}
+                    {% endfor %}
+                </p>
+                <!--<p class="card-text"><small>{{book.anotation | slice:":150"}}</small></p>-->
+                <a href="{% url 'book_detail' book.pk %}" class="btn" style="background-color: #076A78; color: #F8F8FF;">Подробнее</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %}
